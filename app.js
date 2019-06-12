@@ -18,6 +18,7 @@ var leaderRouter = require('./routes/leaderRouter');
 var promoRouter = require('./routes/promoRouter');
 var dishRouter = require('./routes/dishRouter');
 const uploadRouter = require('./routes/uploadRouter');
+const favoriteRouter = require('./routes/favoriteRouter');
 
 
 const url = config.mongoUrl;
@@ -67,6 +68,7 @@ app.use('/dishes', dishRouter);
 app.use('/leaders', leaderRouter);
 app.use('/promotions', promoRouter);
 app.use('/imageUpload', uploadRouter);
+app.use('/favorites', favoriteRouter);
 
 
 // catch 404 and forward to error handler

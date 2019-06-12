@@ -9,6 +9,7 @@ const commentSchema = new schema({
         min: 1,
         max: 5,
         required: true
+
     },
     comment: {
         type: String,
