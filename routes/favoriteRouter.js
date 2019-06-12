@@ -133,6 +133,38 @@ favoriteRouter.route('/:dishId')
     .options(cors.corsWithOptions, (req, res) => {
         res.statusCode(200);
     })
+    .get(cors.cors, authenticate.verifyUser, (req, res, next) => {
+        Favorites.findOne({
+                user: req.user._id
+            })
+            .then((favorite) => {
+                if (!favorite) {
+                    res.statusCode = 200;
+                    res.setHeader('Content-Type', 'application/json');
+                    return res.json({
+                        "exists": false,
+                        "favorites": favorites
+                    });
+                } else {
+                    if (favorite.dishes.indexOf(req.params.dishId) < 0) {
+                        res.statusCode = 200;
+                        res.setHeader('Content-Type', 'application/json');
+                        return res.json({
+                            "exists": false,
+                            "favorites": favorites
+                        });
+                    } else {
+                        res.statusCode = 200;
+                        res.setHeader('Content-Type', 'application/json');
+                        return res.json({
+                            "exists": true,
+                            "favorites": favorites
+                        });
+                    }
+                }
+            }, (err) => next(err))
+            .catch((err) => next(err));
+    })
     .post(cors.corsWithOptions, authenticate.verifyUser, (req, res, next) => {
         Favorites.findOne({
                 user: req.user._id
